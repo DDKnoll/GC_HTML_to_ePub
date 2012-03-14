@@ -1,0 +1,31 @@
+Project Specification for converting HTML documents to ePub format.
+
+HTML documents and ePub files are similar in many respects: They both use a
+markup language to structure their information and use css to style this
+information.  However, the conversion process might seem straightforward,
+but there will undoubtedly be some difficulties.  First, content in an ebook is
+generally read from front to back, but an HTML site is not strictly
+linear.  Secondly, an HTML site contains many links to navigate logically
+and ePub instead uses a single table of contents and no other links between
+pages.  Finally, some elements in HTML are designed to be a fixed width or
+height, where ePub documents are supposed to flow text as it is resized.
+We will have to make some design decisions and assumptions that attempt to
+best solve these conversion issues, but the process will not convert every
+page perfectly.
+
+Since HTML and ePub both use a markup language, then we should be
+able to use a tree data structure for the entire conversion process.  This
+tree structure will benefit if the input is valid xhtml.  Otherwise, there
+might be some unspecified behavior that we will do our best to handle.
+
+The process of this program is generally straight-line and should occur in
+the following order:
+
+1. Determine order of pages be loading a file describing the files and
+table of contents.
+2. Create the table of contents and ePub manifest.
+3. For each HTML page:
+   - Parse the document and create the tree structure.
+   - Convert Elements to ePub.
+   - Append ePub elements to end of book.
+4. Save the manifest and document and then zip of them. Done!
